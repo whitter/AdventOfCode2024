@@ -18,7 +18,7 @@ void HandleProcess(string day)
 {
     var filePath = $"{AppDomain.CurrentDomain.BaseDirectory}Data/day{day}_input.txt";
 
-    string solverClassName = $"AdventOfCode2024.Solvers.Day{day}.Day{day}Solver";
+    string solverClassName = $"AdventOfCode2024.Solvers.Day{day}Solver";
     var solverType = Type.GetType(solverClassName);
 
     if (solverType == null)
@@ -31,10 +31,12 @@ void HandleProcess(string day)
 
     var rawData = File.ReadAllText(filePath);
 
+    var part1Data = solver!.ParseData(rawData);
+    var part2Data = solver!.ParseData(rawData);
+
     var timer = new Stopwatch();
     timer.Start();
 
-    var part1Data = solver!.ParseData(rawData);
     var part1Result = solver!.SolvePart1(part1Data);
 
     timer.Stop();
@@ -43,7 +45,6 @@ void HandleProcess(string day)
 
     timer.Restart();
 
-    var part2Data = solver!.ParseData(rawData);
     var part2Result = solver!.SolvePart2(part2Data);
 
     timer.Stop();

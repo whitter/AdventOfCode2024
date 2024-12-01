@@ -1,6 +1,6 @@
 namespace AdventOfCode2024.Test;
 
-using AdventOfCode2024.Solvers.Day1;
+using AdventOfCode2024.Solvers;
 
 public class Day1Tests
 {

@@ -1,4 +1,4 @@
-namespace AdventOfCode2024.Solvers.Day1;
+namespace AdventOfCode2024.Solvers;
 
 public class Day1Solver : BaseSolver<(int[] First, int[] Second), int>
 {
@@ -11,8 +11,8 @@ public class Day1Solver : BaseSolver<(int[] First, int[] Second), int>
         return ([.. lines.Select(x => x[0]).OrderBy(x => x)], [.. lines.Select(x => x[1]).OrderBy(x => x)]);
     }
 
-    public override int SolvePart1((int[] First, int[] Second) inputData) 
-        => Enumerable.Zip(inputData.First, inputData.Second, (first, second) => Math.Abs(first - second)).Sum();
+    public override int SolvePart1((int[] First, int[] Second) inputData)
+        => inputData.First.Zip(inputData.Second, (first, second) => Math.Abs(first - second)).Sum();
 
     public override int SolvePart2((int[] First, int[] Second) inputData)
     {
