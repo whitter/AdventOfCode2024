@@ -7,35 +7,29 @@ public class Day2Solver : BaseSolver<int[][], int>
             .Select(line => line.SplitBy<int>(" "))
             .ToArray();
 
-    public override int SolvePart1(int[][] inputData) =>
-        inputData.Where(line => {
-            var increasing = line[1] > line[0];
-
-            return Enumerable.Zip(line.Take(line.Length - 1), line.Skip(1))
-                .All(pair => IsSafe(increasing, pair));
-        })
-        .Count();
+    public override int SolvePart1(int[][] inputData) => inputData.Where(IsSafe).Count();
 
     public override int SolvePart2(int[][] inputData) =>
-        inputData.Where(line => {
-            for (var i = 0; i < line.Length; i++)
-            {
-                var newLine = new List<int>(line);
+        inputData.Where(line => line.ToDampened().Any(IsSafe)).Count();
 
-                newLine.RemoveAt(i);
+    private bool IsSafe(int[] line) {
+        var increasing = line[1] > line[0];
 
-                var increasing = newLine[1] > newLine[0];
+        return Enumerable.Zip(line.Take(line.Length - 1), line.Skip(1))
+            .All(pair => (increasing && pair.Second - pair.First >= 1 && pair.Second - pair.First <= 3) || (!increasing && pair.First - pair.Second >= 1 && pair.First - pair.Second <= 3));
+    }
+}
 
-                if(Enumerable.Zip(newLine.Take(newLine.Count - 1), newLine.Skip(1))
-                    .All(pair => IsSafe(increasing, pair)))
-                {
-                    return true;
-                }
-            }
+public static class Extensions {
+    public static IEnumerable<int[]> ToDampened(this int[] line)
+    {
+        for (var i = 0; i < line.Length; i++)
+        {
+            var newLine = new List<int>(line);
 
-            return false;
-        })
-        .Count();
+            newLine.RemoveAt(i);
 
-    private bool IsSafe(bool increasing, (int First, int Second) pair) => (increasing && pair.Second - pair.First >= 1 && pair.Second - pair.First <= 3) || (!increasing && pair.First - pair.Second >= 1 && pair.First - pair.Second <= 3);
+            yield return newLine.ToArray();
+        }
+    }
 }
