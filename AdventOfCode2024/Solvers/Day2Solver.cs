@@ -3,8 +3,8 @@ namespace AdventOfCode2024.Solvers.Day2;
 public class Day2Solver : BaseSolver<int[][], int>
 {
     public override int[][] ParseData(string rawData) => [.. rawData
-            .SplitByNewline<string>()
-            .Select(line => line.SplitBy<int>(" "))];
+        .SplitByNewline<string>()
+        .Select(line => line.SplitBy<int>(" "))];
 
     public override int SolvePart1(int[][] inputData) => inputData.Count(IsSafe);
 
