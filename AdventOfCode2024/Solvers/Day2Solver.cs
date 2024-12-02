@@ -15,8 +15,8 @@ public class Day2Solver : BaseSolver<int[][], int>
     {
         var increasing = line[1] > line[0];
 
-        return Enumerable.Zip(line.Take(line.Length - 1), line.Skip(1))
-            .All(pair => (increasing && pair.Second - pair.First >= 1 && pair.Second - pair.First <= 3) || (!increasing && pair.First - pair.Second >= 1 && pair.First - pair.Second <= 3));
+        return Enumerable.Zip(line[..^1], line[1..])
+            .All(pair => Math.Abs(pair.Second - pair.First) >= 1 && Math.Abs(pair.Second - pair.First) <= 3 && (increasing ? pair.Second > pair.First : pair.Second < pair.First));
     }
 }
 
