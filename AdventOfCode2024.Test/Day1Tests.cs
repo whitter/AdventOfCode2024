@@ -1,10 +1,10 @@
-namespace AdventOfCode2024.Test;
+using AdventOfCode2024.Solvers.Day1;
 
-using AdventOfCode2024.Solvers;
+namespace AdventOfCode2024.Test;
 
 public class Day1Tests
 {
-    readonly string input = @"3   4
+    private readonly string _input = @"3   4
 4   3
 2   5
 1   3
@@ -16,7 +16,7 @@ public class Day1Tests
     {
         var solver = new Day1Solver();
 
-        var data = solver.ParseData(input);
+        var data = solver.ParseData(_input);
 
         var result = solver.SolvePart1(data);
 
@@ -28,7 +28,7 @@ public class Day1Tests
     {
         var solver = new Day1Solver();
 
-        var data = solver.ParseData(input);
+        var data = solver.ParseData(_input);
 
         var result = solver.SolvePart2(data);
 

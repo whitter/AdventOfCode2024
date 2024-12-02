@@ -1,18 +1,18 @@
-namespace AdventOfCode2024.Solvers;
+namespace AdventOfCode2024.Solvers.Day2;
 
 public class Day2Solver : BaseSolver<int[][], int>
 {
-    public override int[][] ParseData(string rawData) => rawData
+    public override int[][] ParseData(string rawData) => [.. rawData
             .SplitByNewline<string>()
-            .Select(line => line.SplitBy<int>(" "))
-            .ToArray();
+            .Select(line => line.SplitBy<int>(" "))];
 
-    public override int SolvePart1(int[][] inputData) => inputData.Where(IsSafe).Count();
+    public override int SolvePart1(int[][] inputData) => inputData.Count(IsSafe);
 
     public override int SolvePart2(int[][] inputData) =>
-        inputData.Where(line => line.ToDampened().Any(IsSafe)).Count();
+        inputData.Count(line => line.ToDampened().Any(IsSafe));
 
-    private bool IsSafe(int[] line) {
+    private bool IsSafe(int[] line)
+    {
         var increasing = line[1] > line[0];
 
         return Enumerable.Zip(line.Take(line.Length - 1), line.Skip(1))
@@ -20,7 +20,8 @@ public class Day2Solver : BaseSolver<int[][], int>
     }
 }
 
-public static class Extensions {
+internal static class Extensions
+{
     public static IEnumerable<int[]> ToDampened(this int[] line)
     {
         for (var i = 0; i < line.Length; i++)

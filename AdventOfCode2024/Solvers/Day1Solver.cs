@@ -1,4 +1,4 @@
-namespace AdventOfCode2024.Solvers;
+namespace AdventOfCode2024.Solvers.Day1;
 
 public class Day1Solver : BaseSolver<(int[] First, int[] Second), int>
 {

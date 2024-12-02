@@ -14,11 +14,11 @@ rootCommand.SetHandler(HandleProcess, dayOption);
 
 return await rootCommand.InvokeAsync(args);
 
-void HandleProcess(string day)
+static void HandleProcess(string day)
 {
     var filePath = $"{AppDomain.CurrentDomain.BaseDirectory}Data/day{day}_input.txt";
 
-    string solverClassName = $"AdventOfCode2024.Solvers.Day{day}Solver";
+    var solverClassName = $"AdventOfCode2024.Solvers.Day{day}.Day{day}Solver";
     var solverType = Type.GetType(solverClassName);
 
     if (solverType == null)
