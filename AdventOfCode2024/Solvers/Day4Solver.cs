@@ -16,6 +16,11 @@ public partial class Day4Solver : BaseSolver<string[], int>
         {
             for (var x = 0; x < inputData[y].Length; x++)
             {
+                if (inputData[y][x] != 'X')
+                {
+                    continue;
+                }
+
                 foreach (var direction in directions)
                 {
                     var y1 = y;
