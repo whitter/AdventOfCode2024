@@ -4,12 +4,7 @@ namespace AdventOfCode2024.Test;
 
 public class Day4Tests
 {
-    [Fact]
-    public void Day4_Part1()
-    {
-        var solver = new Day4Solver();
-
-        var data = solver.ParseData(@"MMMSXXMASM
+    private readonly string _input = @"MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
 MSAMASMSMX
@@ -18,7 +13,14 @@ XXAMMXXAMA
 SMSMSASXSS
 SAXAMASAAA
 MAMMMXMMMM
-MXMXAXMASX");
+MXMXAXMASX";
+
+    [Fact]
+    public void Day4_Part1()
+    {
+        var solver = new Day4Solver();
+
+        var data = solver.ParseData(_input);
 
         var result = solver.SolvePart1(data);
 
@@ -30,16 +32,7 @@ MXMXAXMASX");
     {
         var solver = new Day4Solver();
 
-        var data = solver.ParseData(@"MMMSXXMASM
-MSAMXMSMSA
-AMXSXMAAMM
-MSAMASMSMX
-XMASAMXAMM
-XXAMMXXAMA
-SMSMSASXSS
-SAXAMASAAA
-MAMMMXMMMM
-MXMXAXMASX");
+        var data = solver.ParseData(_input);
 
         var result = solver.SolvePart2(data);
 
