@@ -1,116 +1,43 @@
 namespace AdventOfCode2024.Solvers.Day4;
 
-public partial class Day4Solver : BaseSolver<string[], int>
+public partial class Day4Solver : BaseSolver<(char[] Grid, int Length), int>
 {
-    public override string[] ParseData(string rawData) => rawData.SplitByNewline<string>();
-
-    public override int SolvePart1(string[] inputData)
+    public override (char[] Grid, int Length) ParseData(string rawData)
     {
-        var count = 0;
+        var grid = rawData.SplitByNewline<string>();
 
-        var match = "XMAS";
-
-        (int, int)[] directions = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)];
-
-        for (var y = 0; y < inputData.Length; y++)
-        {
-            for (var x = 0; x < inputData[y].Length; x++)
-            {
-                if (inputData[y][x] != 'X')
-                {
-                    continue;
-                }
-
-                foreach (var direction in directions)
-                {
-                    var y1 = y;
-                    var x1 = x;
-
-                    var result = true;
-
-                    for (var c = 0; c < match.Length; c++)
-                    {
-                        if (y1 < 0 || y1 > inputData.Length - 1 || x1 < 0 || x1 > inputData[y1].Length - 1)
-                        {
-                            result = false;
-                            break;
-                        }
-
-                        if (inputData[y1][x1] != match[c])
-                        {
-                            result = false;
-                            break;
-                        }
-
-                        y1 += direction.Item1;
-                        x1 += direction.Item2;
-                    }
-
-                    if (result)
-                    {
-                        count++;
-                    }
-                }
-            }
-        }
-
-        return count;
+        return (grid.SelectMany(x => x).ToArray(), grid.Length);
     }
 
-    public override int SolvePart2(string[] inputData)
+    public override int SolvePart1((char[] Grid, int Length) inputData) =>
+        inputData.Grid.SelectMany((cell, index) => new[] { (0, 1), (1, 1), (1, 0), (1, -1) }.Where(dir => IsMatch(inputData.Grid, index, dir, "XMAS", inputData.Length))).Count();
+
+    public override int SolvePart2((char[] Grid, int Length) inputData) =>
+        inputData.Grid.Where((cell, index) => IsMatch(inputData.Grid, index - inputData.Length - 1, (1, 1), "MAS", inputData.Length) && IsMatch(inputData.Grid, index - inputData.Length + 1, (1, -1), "MAS", inputData.Length)).Count();
+
+    private static bool IsMatch(char[] grid, int start, (int Y, int X) dir, string match, int length)
     {
-        var count = 0;
+        var reversed = match.Reverse().ToArray();
+        var offset = start;
+        var set = new List<char>();
 
-        var match = "MS";
-
-        (int, int)[][] directions = [[(-1, -1), (1, 1)], [(1, 1), (-1, -1)], [(1, -1), (-1, 1)], [(-1, 1), (1, -1)]];
-
-        for (var y = 0; y < inputData.Length; y++)
+        for (var i = 0; i < match.Length; i++)
         {
-            for (var x = 0; x < inputData[y].Length; x++)
+            offset = start + (i * dir.Y * length) + (i * dir.X);
+
+            if (offset < 0 || offset >= grid.Length || (start % length) + (i * dir.X) < 0 || (start % length) + (i * dir.X) >= length)
             {
-                if (inputData[y][x] != 'A')
-                {
-                    continue;
-                }
-
-                var matches = 0;
-
-                foreach (var direction in directions)
-                {
-                    var result = true;
-
-                    for (var c = 0; c < match.Length; c++)
-                    {
-                        var y1 = y + direction[c].Item1;
-                        var x1 = x + direction[c].Item2;
-
-                        if (y1 < 0 || y1 > inputData.Length - 1 || x1 < 0 || x1 > inputData[y1].Length - 1)
-                        {
-                            result = false;
-                            break;
-                        }
-
-                        if (inputData[y1][x1] != match[c])
-                        {
-                            result = false;
-                            break;
-                        }
-                    }
-
-                    if (result)
-                    {
-                        matches++;
-                    }
-                }
-
-                if (matches == 2)
-                {
-                    count++;
-                }
+                return false;
             }
+
+            if (grid[offset] != match[i] && grid[offset] != reversed[i])
+            {
+                return false;
+            }
+
+            set.Add(grid[offset]);
         }
 
-        return count;
+        return set.SequenceEqual(match) || set.SequenceEqual(reversed);
     }
 }
