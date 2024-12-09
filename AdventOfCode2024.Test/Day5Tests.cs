@@ -34,7 +34,7 @@ public class Day5Tests
 97,13,75,29,47";
 
     [Fact]
-    public void Day4_Part1()
+    public void Day5_Part1()
     {
         var solver = new Day5Solver();
 
@@ -46,7 +46,7 @@ public class Day5Tests
     }
 
     [Fact]
-    public void Day4_Part2()
+    public void Day5_Part2()
     {
         var solver = new Day5Solver();
 
