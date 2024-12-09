@@ -36,6 +36,8 @@ public class Day7Solver : BaseSolver<IEnumerable<(long Target, int[] Numbers)>, 
             return total == target;
         }
 
-        return IsEquationPart2(total * numbers[0], target, numbers[1..]) || IsEquationPart2(total + numbers[0], target, numbers[1..]) || IsEquationPart2(long.Parse($"{total}{numbers[0]}", CultureInfo.InvariantCulture), target, numbers[1..]);
+        return IsEquationPart2(total * numbers[0], target, numbers[1..])
+            || IsEquationPart2(total + numbers[0], target, numbers[1..])
+            || IsEquationPart2(long.Parse($"{total}{numbers[0]}", CultureInfo.InvariantCulture), target, numbers[1..]);
     }
 }
